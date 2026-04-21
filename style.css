@@ -45,27 +45,25 @@ body {
     padding-bottom: 30px;
 }
 
-/* --- BARRA DE NAVEGACIÓN --- */
+/* --- BARRA DE NAVEGACIÓN CORREGIDA --- */
 .aqua-navbar {
     width: 100%;
     padding: 15px 0 0 0;
-    border-bottom: 2px solid var(--border-light);
+    border-bottom: 2px solid var(--border-light); /* La línea ahora queda como base */
     position: relative;
-    /* Evita que el scroll lateral ensanche la página */
-    overflow: hidden; 
 }
 
 .nav-container {
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
     align-items: center;
-    gap: 15px;
-    padding: 0 15px;
+    gap: 20px;
+    padding: 0 20px;
 }
 
 @media (min-width: 768px) {
     .nav-container {
-        flex-direction: row;
         justify-content: space-between;
     }
 }
@@ -83,7 +81,7 @@ body {
 
 .logo-sphere {
     width: 35px;
-    aspect-ratio: 1 / 1;
+    aspect-ratio: 1 / 1; /* Siempre un círculo */
     flex-shrink: 0;
     border-radius: 50%;
     background: radial-gradient(circle at 30% 30%, #ffffff 0%, #7dd3fc 20%, #00a8e8 60%, #005f8d 100%);
@@ -91,6 +89,7 @@ body {
     position: relative;
 }
 
+/* Brillo extra tipo burbuja dentro de la esfera */
 .logo-sphere::after {
     content: '';
     display: block;
@@ -101,35 +100,37 @@ body {
     margin: 10% auto;
 }
 
-/* Pestañas (Tabs) con Autoadaptación Total */
+/* Pestañas (Tabs) */
 .nav-links {
     list-style: none;
     display: flex;
-    flex-wrap: nowrap; /* ¡Clave! Prohíbe las dos filas */
-    justify-content: flex-start;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 5px;
-    margin-bottom: -2px;
+    margin-bottom: -2px; /* Baja los links para que pisen la línea del borde */
     position: relative;
     z-index: 2;
-    
-    /* Habilita el deslizamiento horizontal en móviles */
-    overflow-x: auto;
-    width: 100%;
-    -webkit-overflow-scrolling: touch; /* Scroll suave en iOS */
-    padding-bottom: 5px; /* Espacio para que el brillo no se corte */
 }
 
-/* Ocultar la barra de scroll para que se vea más limpio */
+/* --- DISEÑO DE SCROLLBAR AQUA --- */
 .nav-links::-webkit-scrollbar {
-    display: none;
+    height: 4px; /* Muy delgada para que no estorbe */
 }
 
-@media (min-width: 768px) {
-    .nav-links {
-        overflow: visible;
-        justify-content: center;
-        width: auto;
-    }
+.nav-links::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+}
+
+.nav-links::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.5); /* Cristal transparente */
+    border-radius: 10px;
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.nav-links::-webkit-scrollbar-thumb:hover {
+    background: var(--aqua-blue); /* Se ilumina al tocarlo */
 }
 
 .nav-item {
@@ -139,27 +140,33 @@ body {
     font-size: 14px;
     font-weight: 500;
     border: 1px solid var(--border-light);
-    border-bottom: 1px solid transparent;
+    border-bottom: 1px solid transparent; /* Oculta su propio borde inferior */
     border-radius: 12px 12px 0 0;
     background: rgba(255, 255, 255, 0.2);
     transition: all 0.2s ease-in-out;
     display: block;
-    white-space: nowrap; /* Evita que el texto del botón se rompa */
-    flex-shrink: 0; /* Impide que los botones se aplasten */
 }
 
 /* --- ESTADO DE PESTAÑA SELECCIONADA --- */
+
 .nav-item:hover, 
 .nav-item.active {
     background: var(--glossy-gradient);
+    /* Esto es lo que hace que se "levante" y se mantenga así */
     transform: translateY(-3px); 
     color: #002A4D;
+    
+    /* El borde blanco tapa la línea del nav */
     border-bottom: 2px solid white; 
+    
+    /* Sombra extra para acentuar que está por encima */
     box-shadow: inset 0 2px 3px white, 0 5px 10px rgba(0,0,0,0.1);
+    
+    /* Asegura que no se mueva el contenido de abajo al levantarse */
     position: relative;
 }
 
-/* --- GRID DE HABITACIONES --- */
+/* --- GRID DE HABITACIONES (ADAPTABLE) --- */
 .rooms-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -167,7 +174,7 @@ body {
     padding: 30px 20px;
 }
 
-/* --- TARJETA DE HOTEL --- */
+/* --- TARJETA DE HOTEL (GOTA DE AGUA) --- */
 .hotel-card {
     background: rgba(255, 255, 255, 0.5);
     border: 1px solid var(--border-light);
@@ -237,4 +244,54 @@ img {
   font-optical-sizing: auto;
   font-weight: 400;
   font-style: normal;
+}
+
+
+@media (max-width: 767px) {
+    .nav-links {
+        display: grid;
+        /* Forzamos 2 columnas iguales siempre */
+        grid-template-columns: 1fr 1fr; 
+        justify-items: center;
+        align-items: end;
+        
+        background: repeating-linear-gradient(
+            to bottom,
+            transparent,
+            transparent 46px,
+            var(--border-light) 46px,
+            var(--border-light) 48px
+        );
+        background-position: 0 5px;
+        gap: 20px 10px;
+        padding: 0 10px 10px 10px; /* Un poco de padding abajo para el scroll */
+        
+        /* Habilitar scroll lateral si los botones crecen mucho */
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .nav-item {
+        /* Ocupa todo el espacio de su celda de la rejilla */
+        width: 100%; 
+        max-width: 140px;
+        text-align: center;
+        background: rgba(255, 255, 255, 0.95); 
+        border-bottom: 1px solid transparent;
+        z-index: 1;
+    }
+
+    /* Si hay un número impar de botones, el último se centra solo */
+    .nav-item:last-child:nth-child(odd) {
+        grid-column: 1 / span 2;
+    }
+
+    .nav-item.active {
+        background: var(--glossy-gradient); 
+        z-index: 10; 
+        transform: translateY(-4px); 
+        border-bottom: 3px solid white; 
+        box-shadow: 0 4px 10px rgba(255, 255, 255, 0.8), inset 0 2px 3px white;
+        position: relative;
+    }
 }
