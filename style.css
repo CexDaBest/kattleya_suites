@@ -224,3 +224,44 @@ img {
   font-weight: 400;
   font-style: normal;
 }
+
+
+@media (max-width: 767px) {
+    .nav-links {
+        /* Mantenemos el gradiente que crea las líneas de base */
+        background: repeating-linear-gradient(
+            to bottom,
+            transparent,
+            transparent 46px,
+            var(--border-light) 46px,
+            var(--border-light) 48px
+        );
+        background-position: 0 5px;
+        gap: 20px 10px;
+    }
+
+    .nav-item {
+        flex: 1 1 40%;
+        text-align: center;
+        /* Subimos la opacidad para que sea sólido y tape la línea */
+        background: rgba(255, 255, 255, 0.95); 
+        border-bottom: 1px solid transparent;
+        z-index: 1;
+    }
+
+    .nav-item.active {
+        /* Fondo sólido e incremento de z-index para tapar la línea de fondo */
+        background: var(--glossy-gradient); 
+        z-index: 10; 
+        
+        /* Levantamos el botón */
+        transform: translateY(-4px); 
+        
+        /* Borde inferior blanco grueso para "borrar" la línea gris */
+        border-bottom: 3px solid white; 
+        
+        /* Resplandor blanco para asegurar que la línea no se asome */
+        box-shadow: 0 4px 10px rgba(255, 255, 255, 0.8), inset 0 2px 3px white;
+        position: relative;
+    }
+}
