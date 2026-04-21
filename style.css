@@ -45,25 +45,27 @@ body {
     padding-bottom: 30px;
 }
 
-/* --- BARRA DE NAVEGACIÓN CORREGIDA --- */
+/* --- BARRA DE NAVEGACIÓN --- */
 .aqua-navbar {
     width: 100%;
     padding: 15px 0 0 0;
-    border-bottom: 2px solid var(--border-light); /* La línea ahora queda como base */
+    border-bottom: 2px solid var(--border-light);
     position: relative;
+    /* Evita que el scroll lateral ensanche la página */
+    overflow: hidden; 
 }
 
 .nav-container {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    gap: 20px;
-    padding: 0 20px;
+    gap: 15px;
+    padding: 0 15px;
 }
 
 @media (min-width: 768px) {
     .nav-container {
+        flex-direction: row;
         justify-content: space-between;
     }
 }
@@ -81,7 +83,7 @@ body {
 
 .logo-sphere {
     width: 35px;
-    aspect-ratio: 1 / 1; /* Siempre un círculo */
+    aspect-ratio: 1 / 1;
     flex-shrink: 0;
     border-radius: 50%;
     background: radial-gradient(circle at 30% 30%, #ffffff 0%, #7dd3fc 20%, #00a8e8 60%, #005f8d 100%);
@@ -89,7 +91,6 @@ body {
     position: relative;
 }
 
-/* Brillo extra tipo burbuja dentro de la esfera */
 .logo-sphere::after {
     content: '';
     display: block;
@@ -100,37 +101,57 @@ body {
     margin: 10% auto;
 }
 
-/* Pestañas (Tabs) */
+/* Pestañas (Tabs) con Autoadaptación Total */
 .nav-links {
     list-style: none;
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
     gap: 5px;
-    margin-bottom: -2px; /* Baja los links para que pisen la línea del borde */
+    margin-bottom: -2px;
     position: relative;
     z-index: 2;
+    
+    /* Habilita el deslizamiento horizontal en móviles */
+    overflow-x: auto;
+    width: 100%;
+    -webkit-overflow-scrolling: touch; 
+    padding-bottom: 8px; /* Espacio extra para que la barrita no pise los botones */
 }
 
-/* --- DISEÑO DE SCROLLBAR AQUA --- */
+/* --- ESTILO DE LA BARRITA DESLIZADORA FRUTIGER --- */
 .nav-links::-webkit-scrollbar {
-    height: 4px; /* Muy delgada para que no estorbe */
+    height: 5px; /* Altura de la barra */
 }
 
 .nav-links::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.1); /* Carril casi invisible */
     border-radius: 10px;
+    margin: 0 20px;
 }
 
 .nav-links::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.5); /* Cristal transparente */
+    background: rgba(255, 255, 255, 0.4); /* Botón de scroll transparente/cristal */
     border-radius: 10px;
-    backdrop-filter: blur(4px);
     border: 1px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(5px);
 }
 
 .nav-links::-webkit-scrollbar-thumb:hover {
-    background: var(--aqua-blue); /* Se ilumina al tocarlo */
+    background: rgba(255, 255, 255, 0.6); /* Brilla más al pasar el dedo/mouse */
+}
+
+@media (min-width: 768px) {
+    .nav-links {
+        overflow: visible;
+        justify-content: center;
+        width: auto;
+        padding-bottom: 0;
+    }
+    /* Ocultar la barra en escritorio donde no es necesaria */
+    .nav-links::-webkit-scrollbar {
+        display: none;
+    }
 }
 
 .nav-item {
@@ -140,33 +161,27 @@ body {
     font-size: 14px;
     font-weight: 500;
     border: 1px solid var(--border-light);
-    border-bottom: 1px solid transparent; /* Oculta su propio borde inferior */
+    border-bottom: 1px solid transparent;
     border-radius: 12px 12px 0 0;
     background: rgba(255, 255, 255, 0.2);
     transition: all 0.2s ease-in-out;
     display: block;
+    white-space: nowrap; 
+    flex-shrink: 0;
 }
 
 /* --- ESTADO DE PESTAÑA SELECCIONADA --- */
-
 .nav-item:hover, 
 .nav-item.active {
     background: var(--glossy-gradient);
-    /* Esto es lo que hace que se "levante" y se mantenga así */
     transform: translateY(-3px); 
     color: #002A4D;
-    
-    /* El borde blanco tapa la línea del nav */
     border-bottom: 2px solid white; 
-    
-    /* Sombra extra para acentuar que está por encima */
     box-shadow: inset 0 2px 3px white, 0 5px 10px rgba(0,0,0,0.1);
-    
-    /* Asegura que no se mueva el contenido de abajo al levantarse */
     position: relative;
 }
 
-/* --- GRID DE HABITACIONES (ADAPTABLE) --- */
+/* --- GRID DE HABITACIONES --- */
 .rooms-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -174,7 +189,7 @@ body {
     padding: 30px 20px;
 }
 
-/* --- TARJETA DE HOTEL (GOTA DE AGUA) --- */
+/* --- TARJETA DE HOTEL --- */
 .hotel-card {
     background: rgba(255, 255, 255, 0.5);
     border: 1px solid var(--border-light);
@@ -244,54 +259,4 @@ img {
   font-optical-sizing: auto;
   font-weight: 400;
   font-style: normal;
-}
-
-
-@media (max-width: 767px) {
-    .nav-links {
-        display: grid;
-        /* Forzamos 2 columnas iguales siempre */
-        grid-template-columns: 1fr 1fr; 
-        justify-items: center;
-        align-items: end;
-        
-        background: repeating-linear-gradient(
-            to bottom,
-            transparent,
-            transparent 46px,
-            var(--border-light) 46px,
-            var(--border-light) 48px
-        );
-        background-position: 0 5px;
-        gap: 20px 10px;
-        padding: 0 10px 10px 10px; /* Un poco de padding abajo para el scroll */
-        
-        /* Habilitar scroll lateral si los botones crecen mucho */
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-    }
-
-    .nav-item {
-        /* Ocupa todo el espacio de su celda de la rejilla */
-        width: 100%; 
-        max-width: 140px;
-        text-align: center;
-        background: rgba(255, 255, 255, 0.95); 
-        border-bottom: 1px solid transparent;
-        z-index: 1;
-    }
-
-    /* Si hay un número impar de botones, el último se centra solo */
-    .nav-item:last-child:nth-child(odd) {
-        grid-column: 1 / span 2;
-    }
-
-    .nav-item.active {
-        background: var(--glossy-gradient); 
-        z-index: 10; 
-        transform: translateY(-4px); 
-        border-bottom: 3px solid white; 
-        box-shadow: 0 4px 10px rgba(255, 255, 255, 0.8), inset 0 2px 3px white;
-        position: relative;
-    }
 }
