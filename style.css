@@ -228,7 +228,12 @@ img {
 
 @media (max-width: 767px) {
     .nav-links {
-        /* Mantenemos el gradiente que crea las líneas de base */
+        display: grid;
+        /* Forzamos 2 columnas iguales siempre */
+        grid-template-columns: 1fr 1fr; 
+        justify-items: center;
+        align-items: end;
+        
         background: repeating-linear-gradient(
             to bottom,
             transparent,
@@ -238,29 +243,29 @@ img {
         );
         background-position: 0 5px;
         gap: 20px 10px;
+        padding: 0 10px;
     }
 
     .nav-item {
-        flex: 1 1 40%;
+        /* Ocupa todo el espacio de su celda de la rejilla */
+        width: 100%; 
+        max-width: 140px;
         text-align: center;
-        /* Subimos la opacidad para que sea sólido y tape la línea */
         background: rgba(255, 255, 255, 0.95); 
         border-bottom: 1px solid transparent;
         z-index: 1;
     }
 
+    /* Si hay un número impar de botones, el último se centra solo */
+    .nav-item:last-child:nth-child(odd) {
+        grid-column: 1 / span 2;
+    }
+
     .nav-item.active {
-        /* Fondo sólido e incremento de z-index para tapar la línea de fondo */
         background: var(--glossy-gradient); 
         z-index: 10; 
-        
-        /* Levantamos el botón */
         transform: translateY(-4px); 
-        
-        /* Borde inferior blanco grueso para "borrar" la línea gris */
         border-bottom: 3px solid white; 
-        
-        /* Resplandor blanco para asegurar que la línea no se asome */
         box-shadow: 0 4px 10px rgba(255, 255, 255, 0.8), inset 0 2px 3px white;
         position: relative;
     }
