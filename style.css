@@ -257,6 +257,258 @@ img {
 .pixelify-sans-pixel {
   font-family: "Pixelify Sans", sans-serif;
   font-optical-sizing: auto;
-  font-weight: 400;
+  font-weight: 500;
   font-style: normal;
+  font-size: 2.2rem;
+  margin: 0;
+  line-height: 1.2;
+  letter-spacing: -0.5px; /* Estrecha un poco las letras para el look Frutiger */
+}
+
+@media (max-width: 600px) {
+    .aqua-details summary h1 {
+        font-size: 1.8rem; /* Un poco más pequeño solo en móviles */
+    }
+}
+
+details {
+    background: var(--glass-bg);
+    border: 1px solid var(--border-light);
+    border-radius: 10px;
+    padding: 10px;
+    backdrop-filter: blur(10px);
+}
+
+summary {
+    cursor: pointer;
+    outline: none;
+    color: var(--deep-blue);
+    font-weight: bold;
+}
+
+/* --- ELIMINACIÓN DEFINITIVA DE LA FLECHA REBELDE --- */
+
+/* 1. Cambiamos el display para anular el comportamiento de 'list-item' */
+.aqua-details summary {
+    display: flex !important; /* Al no ser 'list-item', el navegador no sabe dónde poner la flecha */
+    list-style: none !important;
+    list-style-type: none !important;
+    align-items: center;
+    cursor: pointer;
+    padding: 10px;
+}
+
+/* 2. Selectores específicos para forzar la desaparición */
+.aqua-details summary::-webkit-details-marker,
+.aqua-details summary::marker {
+    display: none !important;
+    content: "" !important;
+    color: transparent !important;
+}
+
+/* 3. Tu icono personalizado (Asegúrate de que la ruta 'icons/down_arrow.png' sea correcta) */
+.aqua-details summary::before {
+    content: "";
+    display: inline-block;
+    width: 30px; 
+    height: 30px;
+    margin-right: 15px;
+    background-image: url("icons/down_arrow.png"); 
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    transition: transform 0.4s ease;
+    filter: drop-shadow(0 2px 3px rgba(0,0,0,0.2));
+}
+
+/* Animación al abrir */
+.aqua-details[open] summary::before {
+    transform: rotate(180deg);
+}
+
+/* --- VENTANA LED INTELIGENTE --- */
+.marquee-window {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    overflow: hidden; /* Recorta si el texto es muy largo */
+    white-space: nowrap;
+    position: relative;
+    gap: 10px;
+}
+
+.aqua-details summary h1 {
+    display: inline-block;
+    font-family: "Pixelify Sans", sans-serif;
+    font-size: 2rem;
+    color: var(--deep-blue);
+    
+    /* Estado inicial: quieto */
+    transform: translateX(0);
+    transition: transform 0.3s ease;
+}
+
+/* --- ANIMACIÓN AUTOMÁTICA --- */
+/* Solo se activa si el texto desborda el contenedor */
+.marquee-window:hover h1,
+.aqua-details[open] .marquee-window h1 {
+    animation: marquee-auto 8s linear infinite;
+}
+
+@keyframes marquee-auto {
+    0% { transform: translateX(0); }
+    10% { transform: translateX(0); } /* Pausa para que se lea al inicio */
+    100% { transform: translateX(-100%); }
+}
+
+.aqua-details summary h1 {
+    /* ... tus estilos anteriores (fuente, tamaño, animación) ... */
+
+    /* BLOQUEO DE COPIA Y SELECCIÓN */
+    user-select: none;           /* Evita que el usuario resalte el texto */
+    -webkit-user-select: none;    /* Para Chrome, Safari y Opera */
+    -moz-user-select: none;       /* Para Firefox */
+    -ms-user-select: none;        /* Para Internet Explorer/Edge */
+    
+    pointer-events: none;         /* El mouse ignora el texto (no puede hacerle click derecho directamente) */
+}
+
+/* Permitimos que el summary siga siendo clickable para abrir el menú */
+.aqua-details summary {
+    pointer-events: auto; 
+}
+
+hr {
+    height: 6px;
+    border: none;
+    border-radius: 50px;
+    
+    /* Fondo translúcido con degradado suave */
+    background: linear-gradient(to bottom, 
+        rgba(255, 255, 255, 0.5) 0%, 
+        rgba(0, 168, 232, 0.3) 50%, 
+        rgba(0, 95, 141, 0.5) 100%);
+    
+    /* Efecto de desenfoque detrás de la línea */
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    
+    /* Borde brillante muy fino para definir la forma */
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    
+    /* Sombra suave para que no se pierda en el fondo */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    
+    margin: 25px auto;
+    width: 99.5%;
+}
+
+/* --- TARJETA DE RESEÑA FRUTIGER AQUA --- */
+.reseña {
+    background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.4) 0%, 
+        rgba(160, 234, 255, 0.25) 50%, 
+        rgba(255, 255, 255, 0.1) 100%);
+    
+    /* Efecto de cristal esmerilado */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    
+    /* Bordes muy redondeados y brillantes */
+    border-radius: 25px;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-top: 2px solid rgba(255, 255, 255, 0.8); /* Brillo de luz superior */
+    
+    padding: 25px;
+    margin: 20px 0;
+    position: relative;
+    overflow: hidden;
+    
+    /* Sombra suave tipo agua */
+    box-shadow: 
+        0 8px 32px rgba(0, 168, 232, 0.15),
+        inset 0 0 15px rgba(255, 255, 255, 0.3);
+}
+
+/* --- DETALLES INTERNOS (TEXTO) --- */
+.reseña h3 {
+    font-family: "Pixelify Sans", sans-serif;
+    color: var(--deep-blue);
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.8);
+}
+
+.reseña p {
+    color: #004a7c;
+    line-height: 1.6;
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+/* --- EFECTO GLOSSY (REFLEJO SUPERIOR) --- */
+.reseña::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    background: linear-gradient(
+        to bottom, 
+        rgba(255, 255, 255, 0.3) 0%, 
+        transparent 100%
+    );
+    pointer-events: none;
+}
+
+/* --- ALINEACIÓN DE PFP Y TÍTULO --- */
+.reseña-header {
+    display: flex;         /* Alinea en fila */
+    align-items: center;   /* Centra verticalmente la pfp con el texto */
+    gap: 15px;             /* Espacio entre la foto y el nombre */
+    margin-bottom: 15px;   /* Separación del párrafo inferior */
+}
+
+.pfp {
+    height: 3.5rem;        /* Un poco más grande para que destaque */
+    width: 3.5rem;         /* Proporción 1:1 para que sea un círculo perfecto */
+    display: block;
+    object-fit: cover;     /* Evita que la foto se deforme */
+    
+    /* Estilo Aqua para la foto */
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.707);
+    box-shadow: 0 2px 8px rgba(0, 168, 232, 0.3);
+}
+
+.reseña h3 {
+    margin: 0;             /* Quitamos márgenes extra para que no se desalinee */
+    user-select: none;     /* Bloqueo de copia como en el título principal */
+    -webkit-user-select: none;
+}
+
+/* --- CONFIGURACION DE LA ESTRELLA --- */
+.star {
+    width: 24px;   /* Tamaño de la estrella entera */
+    height: 24px;
+    display: inline-block;
+    
+    /* Carga del archivo desde tu carpeta de iconos */
+    background-image: url("icons/star.png"); 
+    background-size: contain;
+    background-repeat: no-repeat;
+    
+    /* Brillo tipo cristal (Aqua) */
+    filter: drop-shadow(0 2px 3px rgba(0, 168, 232, 0.4));
+}
+
+/* --- LOGICA PARA LA MEDIA ESTRELLA --- */
+.star.half {
+    width: 12px; /* Recortamos el ancho a la mitad exacta */
+    background-position: left; /* Muestra solo el lado izquierdo del PNG */
+    background-size: 24px 24px; /* Mantiene el tamaño original para que no se encoja */
+    overflow: hidden;
 }
