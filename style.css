@@ -512,3 +512,76 @@ hr {
     background-size: 24px 24px; /* Mantiene el tamaño original para que no se encoja */
     overflow: hidden;
 }
+
+.text-blue {
+    color: rgb(0, 102, 255);
+    text-shadow: #000000;
+    font-weight: 500;
+    text-align: justify;
+}
+
+.bold-text-blue {
+    color: rgb(0, 26, 255);
+    text-shadow: #000000;
+    font-weight: 800;
+    text-align: center;
+    font-size: larger;
+}
+
+.title {
+    font-weight: bolder;
+    color: #005f8d;
+    text-shadow: #000000;
+    text-align: center;
+}
+
+/* Esto hace que el desplazamiento sea suave como el agua */
+html {
+    scroll-behavior: smooth !important;
+}
+
+.tag, .tag2 {
+    color: #00a8e8; /* Azul cyan aqua */
+    text-decoration: none;
+    font-weight: bold;
+    padding: 2px 8px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease; /* Cambiamos background por 'all' para que anime todo */
+    border: 1px solid transparent;
+}
+
+.tag:hover, .tag2:hover {
+    background: rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 10px rgba(0, 168, 232, 0.4);
+    color: #002a4d;
+}
+
+/* --- ILUMINACION TEMPORAL (FLASH AQUA) --- */
+.reseña:target {
+    animation: flash-highlight 3s ease-out forwards;
+}
+
+@keyframes flash-highlight {
+    0% {
+        border: 2px solid rgba(255, 255, 255, 0.9);
+        box-shadow: 0 0 40px rgba(0, 168, 232, 1);
+        background: rgba(160, 234, 255, 0.5);
+        transform: scale(1.03);
+    }
+    30% {
+        box-shadow: 0 0 20px rgba(0, 168, 232, 0.6);
+        transform: scale(1.02);
+    }
+    100% {
+        /* Volver al estado original del CSS */
+        border: 1px solid rgba(255, 255, 255, 0.6);
+        box-shadow: 0 8px 32px rgba(0, 168, 232, 0.15);
+        background: linear-gradient(135deg, 
+            rgba(255, 255, 255, 0.4) 0%, 
+            rgba(160, 234, 255, 0.25) 50%, 
+            rgba(255, 255, 255, 0.1) 100%);
+        transform: scale(1);
+    }
+}
