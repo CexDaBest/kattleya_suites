@@ -585,3 +585,93 @@ html {
         transform: scale(1);
     }
 }
+
+.centered {
+    text-align: center;
+}
+
+.stars-container {
+    display: flex;
+    justify-content: center; /* Centra las estrellas horizontalmente */
+    align-items: center;     /* Centra las estrellas verticalmente */
+    gap: 4px;                /* Espacio entre cada estrella */
+    margin-bottom: 15px;
+    width: 100%;             /* Asegura que ocupe todo el ancho de la reseña */
+    
+    /* El brillo que ya tenías */
+    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.6));
+}
+
+/* --- CONFIGURACION DE LA ESTRELLA --- */
+.star-big {
+    width: 50px;   /* Tamaño de la estrella entera */
+    height: 50px;
+    display: inline-block;
+    
+    /* Carga del archivo desde tu carpeta de iconos */
+    background-image: url("icons/star.png"); 
+    background-size: contain;
+    background-repeat: no-repeat;
+    
+    /* Brillo tipo cristal (Aqua) */
+    filter: drop-shadow(0 2px 3px rgba(0, 168, 232, 0.4));
+}
+
+/* --- LOGICA PARA LA MEDIA ESTRELLA --- */
+.star-big.half {
+    width: 25px; /* Recortamos el ancho a la mitad exacta */
+    background-position: left; /* Muestra solo el lado izquierdo del PNG */
+    background-size: 50px 50px; /* Mantiene el tamaño original para que no se encoja */
+    overflow: hidden;
+}
+
+.rounded-img {
+    border-radius: 10px;
+}
+
+/* El contenedor es el que debe tener el flex */
+.image-text-container {
+    display: flex;
+    align-items: center; /* Centra el texto verticalmente respecto a la imagen */
+    gap: 20px;           /* Espacio entre la imagen y el texto */
+    margin: 20px 0;
+}
+
+.smolimg {
+    height: 15rem;       /* Reduje un poco de 20rem para que no ocupe tanto espacio */
+    width: auto;         /* Mantiene la proporción */
+    display: block;      /* Ya no necesita flex aquí */
+    border-radius: 15px;
+    border: 2px solid var(--border-light);
+    box-shadow: 0 5px 15px rgba(0, 168, 232, 0.2);
+}
+
+.side-text {
+    flex: 1;             /* Hace que el texto ocupe el resto del espacio disponible */
+}
+
+.adjustimg {
+    height: 20em;
+}
+
+.centerimg {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.button-reserve {
+    background-color: #99cc00;
+    width: 90%;
+    height: 37.5px;
+    border-radius: 10px;
+}
+
+.smolerimg {
+    height: 9.5rem;       /* Reduje un poco de 20rem para que no ocupe tanto espacio */
+    width: auto;         /* Mantiene la proporción */
+    display: block;      /* Ya no necesita flex aquí */
+    border-radius: 15px;
+    border: 2px solid var(--border-light);
+    box-shadow: 0 5px 15px rgba(0, 168, 232, 0.2);
+}
