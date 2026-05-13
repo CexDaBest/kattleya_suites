@@ -101,6 +101,15 @@ body {
     margin: 10% auto;
 }
 
+#katlogo {
+    width: 35px;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 4px 10px rgba(0, 168, 232, 0.25);
+    flex-shrink: 0;
+}
+
 /* Pestañas (Tabs) con Autoadaptación Total */
 .nav-links {
     list-style: none;
